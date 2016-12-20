@@ -17,7 +17,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -105,7 +104,7 @@ public class ApplicationStart extends Application {
 		GridPane.setMargin(confirmProgramChoiceButton, new Insets(20, 0, 0, 0));
 		extraParameterPane.add(confirmProgramChoiceButton, 3, 0);
 
-		Text programChoiceInstructionText = new Text("När du är klar, klicka på 'Bekräfta'");
+		Text programChoiceInstructionText = new Text("När du är klar, klicka på 'Bekräfta allt'");
 		programChoiceInstructionText.setFont(new Font("Times New Roman", 18));
 		FlowPane.setMargin(programChoiceInstructionText, new Insets(15, 0, 0, 0));
 

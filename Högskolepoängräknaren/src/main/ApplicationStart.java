@@ -14,9 +14,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -25,15 +29,22 @@ import main.backend.program.ProgramSave;
 public class ApplicationStart extends Application {
 
 	int numberOfListsPressed;
+	
 	boolean programListHasNotBeenActivated = true;
 	boolean programSpecialisationListHasNotBeenActivated = true;
 	boolean modernForeignLanguagesListHasNotBeenActivated = true;
 
+	TextField[] programCourses;
+	Text[] qualificationPointsForCourse;
+	
+	String[] coursePointsLabels = { "Kurs", "Betyg", "Meritvärde", "Poäng" };
+
 	public void start(Stage stage) throws Exception {
 
-		FlowPane mainPane = new FlowPane();
+		VBox mainPane = new VBox();
 		mainPane.setPadding(new Insets(15.0));
-		mainPane.setOrientation(Orientation.VERTICAL);
+		VBox mainVBox = new VBox();
+		
 
 		Text titleText = new Text("Högskolepoängräknaren");
 		titleText.setFont(new Font("Times New Roman", 28));
@@ -41,7 +52,7 @@ public class ApplicationStart extends Application {
 		subtitleText.setFont(new Font("Times New Roman", 15));
 
 		GridPane programChoicePane = new GridPane();
-		FlowPane.setMargin(programChoicePane, new Insets(20.0, 0, 0, 0));
+		VBox.setMargin(programChoicePane, new Insets(10.0, 0, 0, 0));
 
 		Text theoreticalProgramListRubric = new Text("Gymnasieprogram");
 		theoreticalProgramListRubric.setFont(new Font("Times New Roman", 20));
@@ -91,7 +102,7 @@ public class ApplicationStart extends Application {
 		GridPane.setMargin(hasSwedishAsASecondLanguageLabel, new Insets(20, 0, 0, 0));
 		extraParameterPane.add(hasSwedishAsASecondLanguageLabel, 0, 0);
 		CheckBox hasSwedishAsASecondLanguageCheckBox = new CheckBox();
-		GridPane.setMargin(hasSwedishAsASecondLanguageCheckBox, new Insets(20, 60, 0, 0));
+		GridPane.setMargin(hasSwedishAsASecondLanguageCheckBox, new Insets(10, 60, 0, 0));
 		extraParameterPane.add(hasSwedishAsASecondLanguageCheckBox, 1, 0);
 
 		Text notificationToFillInAllAlternatives = new Text();
@@ -106,15 +117,15 @@ public class ApplicationStart extends Application {
 
 		Text programChoiceInstructionText = new Text("När du är klar, klicka på 'Bekräfta allt'");
 		programChoiceInstructionText.setFont(new Font("Times New Roman", 18));
-		FlowPane.setMargin(programChoiceInstructionText, new Insets(15, 0, 0, 0));
+		VBox.setMargin(programChoiceInstructionText, new Insets(5, 0, 0, 0));
 
 		Text chosenProgramDisplayText = new Text("valt program här!");
 		chosenProgramDisplayText.setFont(new Font("Times New Roman", 30));
-		FlowPane.setMargin(chosenProgramDisplayText, new Insets(30, 0, 0, 0));
+		VBox.setMargin(chosenProgramDisplayText, new Insets(15, 0, 0, 0));
 
 		FlowPane totalPointsDisplayPane = new FlowPane();
 		totalPointsDisplayPane.setOrientation(Orientation.HORIZONTAL);
-		FlowPane.setMargin(totalPointsDisplayPane, new Insets(5, 0, 0, 0));
+		VBox.setMargin(totalPointsDisplayPane, new Insets(10, 0, 7, 0));
 
 		Text pointsAchievedNowText = new Text("Placeholder 1");
 		pointsAchievedNowText.setFont(new Font("Times New Roman", 20));
@@ -156,7 +167,7 @@ public class ApplicationStart extends Application {
 		savedSetupsPane.getChildren().addAll(savedSetupOne, savedSetupTwo, savedSetupThree, savedSetupFour);
 
 		FlowPane courseTableUpperLabelsPane = new FlowPane();
-		courseTableUpperLabelsPane.setOrientation(Orientation.HORIZONTAL);
+		courseTableUpperLabelsPane.setPadding(new Insets(10, 0, 20, 0));
 
 		Label courseInTableLabel = new Label("Kurs");
 
@@ -176,12 +187,21 @@ public class ApplicationStart extends Application {
 		columnOneForCourseTable.setPrefWidth(200.0);
 		courseTablePane.getColumnConstraints().add(columnOneForCourseTable);
 
+		ScrollPane sceneScrollPane = new ScrollPane(mainPane);
+		sceneScrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		sceneScrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+
 		mainPane.getChildren().addAll(titleText, subtitleText, programChoicePane, extraParameterPane,
 				programChoiceInstructionText, chosenProgramDisplayText, totalPointsDisplayPane, savedSetupsPane,
 				courseTableUpperLabelsPane, courseTablePane);
-		Scene applicationScene = new Scene(mainPane);
-		stage.setHeight(1000.0);
-		stage.setWidth(900.0);
+		mainVBox.getChildren().addAll(mainPane, sceneScrollPane);
+		Scene applicationScene = new Scene(mainVBox);
+		stage.setHeight(1050);
+		
+		sceneScrollPane.setPrefHeight(stage.getHeight());
+		
+		
+		stage.setWidth(850.0);
 		stage.setScene(applicationScene);
 		stage.setTitle("Högskolepoängräknaren");
 		stage.show();
@@ -259,10 +279,24 @@ public class ApplicationStart extends Application {
 					// Place out coursesInTable
 					for (int i = 0; i < coursesForProgram.length; i++) {
 						Label course = new Label(coursesForProgram[i]);
-						GridPane.setMargin(course, new Insets(2.5, 0, 2.5, 0));
+						GridPane.setMargin(course, new Insets(0, 0, 0, 0));
 						courseTablePane.add(course, 0, i);
-
 					}
+					programCourses = new TextField[coursesForProgram.length];
+					qualificationPointsForCourse = new Text[coursesForProgram.length];
+					notificationToFillInAllAlternatives.setText("");
+					
+
+					for (int i = 0; i < programCourses.length; i++) {
+						programCourses[i] = new TextField();
+						programCourses[i].setPrefSize(25.0, 0);
+						GridPane.setMargin(programCourses[i], new Insets(0, 2.5, 7.5, 25));
+						courseTablePane.add(programCourses[i], 1, i);
+						
+						/*//Adds the parameter for qualification points (meritvärde)
+						qualificationPointsForCourse[i] = ProgramSave. */
+					}
+
 				} else {
 					notificationToFillInAllAlternatives.setText("Please fill in all alternatives");
 				}
@@ -271,7 +305,5 @@ public class ApplicationStart extends Application {
 
 		});
 	}
-
-	String[] coursePointsLabels = { "Kurs", "Betyg", "Meritvärde", "Poäng" };
 
 }

@@ -29,14 +29,13 @@ import main.backend.program.ProgramSave;
 public class ApplicationStart extends Application {
 
 	int numberOfListsPressed;
-	
+
 	boolean programListHasNotBeenActivated = true;
 	boolean programSpecialisationListHasNotBeenActivated = true;
 	boolean modernForeignLanguagesListHasNotBeenActivated = true;
 
 	TextField[] programCourses;
-	Text[] qualificationPointsForCourse;
-	
+
 	String[] coursePointsLabels = { "Kurs", "Betyg", "Meritvärde", "Poäng" };
 
 	public void start(Stage stage) throws Exception {
@@ -44,7 +43,6 @@ public class ApplicationStart extends Application {
 		VBox mainPane = new VBox();
 		mainPane.setPadding(new Insets(15.0));
 		VBox mainVBox = new VBox();
-		
 
 		Text titleText = new Text("Högskolepoängräknaren");
 		titleText.setFont(new Font("Times New Roman", 28));
@@ -197,10 +195,9 @@ public class ApplicationStart extends Application {
 		mainVBox.getChildren().addAll(mainPane, sceneScrollPane);
 		Scene applicationScene = new Scene(mainVBox);
 		stage.setHeight(1050);
-		
+
 		sceneScrollPane.setPrefHeight(stage.getHeight());
-		
-		
+
 		stage.setWidth(850.0);
 		stage.setScene(applicationScene);
 		stage.setTitle("Högskolepoängräknaren");
@@ -230,6 +227,9 @@ public class ApplicationStart extends Application {
 
 		});
 
+		// Checks whether program specialisation list has been activated to make
+		// sure that all parameters have been added before courses are added,
+		// The same goes for the Modern foreign languages list
 		programSpecialisationList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
 
 			public void changed(ObservableValue<? extends String> arg0, String arg1, String arg2) {
@@ -254,7 +254,8 @@ public class ApplicationStart extends Application {
 
 			}
 		});
-
+		
+		//Loads the courses according to the parameters the user has set
 		confirmProgramChoiceButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {
@@ -276,34 +277,41 @@ public class ApplicationStart extends Application {
 							hasSwedishAsASecondLanguageCheckBox.isSelected(), programSpecialisation,
 							modernForeignLanguagesChoice);
 
+					programCourses = new TextField[coursesForProgram.length];
+					notificationToFillInAllAlternatives.setText("");
+
 					// Place out coursesInTable
 					for (int i = 0; i < coursesForProgram.length; i++) {
 						Label course = new Label(coursesForProgram[i]);
-						GridPane.setMargin(course, new Insets(0, 0, 0, 0));
-						courseTablePane.add(course, 0, i);
-					}
-					programCourses = new TextField[coursesForProgram.length];
-					qualificationPointsForCourse = new Text[coursesForProgram.length];
-					notificationToFillInAllAlternatives.setText("");
-					
 
-					for (int i = 0; i < programCourses.length; i++) {
+						courseTablePane.add(course, 0, i);
+
+						// Users grade for course is added here
 						programCourses[i] = new TextField();
 						programCourses[i].setPrefSize(25.0, 0);
-						GridPane.setMargin(programCourses[i], new Insets(0, 2.5, 7.5, 25));
+						GridPane.setMargin(programCourses[i], new Insets(0, 35, 7.5, 25));
 						courseTablePane.add(programCourses[i], 1, i);
-						
-						/*//Adds the parameter for qualification points (meritvärde)
-						qualificationPointsForCourse[i] = ProgramSave. */
+
+						// Adds the parameter for qualification points
+						// (meritvärde)
+						String qualificationPointsLackingZeroDecimal;
+						double qualificationPoints = ProgramSave.getQualificationPointsForCourse(coursesForProgram[i]);
+						if (qualificationPoints != 0.5) {
+							qualificationPointsLackingZeroDecimal = String.valueOf((int) qualificationPoints);
+						} else {
+							qualificationPointsLackingZeroDecimal = String.valueOf(qualificationPoints);
+						}
+
+						Text qualificationPointsForCourseText = new Text(qualificationPointsLackingZeroDecimal);
+						qualificationPointsForCourseText.setTranslateY(-5);
+						courseTablePane.add(qualificationPointsForCourseText, 2, i);
+
 					}
 
 				} else {
 					notificationToFillInAllAlternatives.setText("Please fill in all alternatives");
 				}
-
 			}
-
 		});
 	}
-
 }

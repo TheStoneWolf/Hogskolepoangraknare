@@ -6,6 +6,9 @@ public class ProgramSave {
 
 	private static String program;
 
+	private static double qualificationPointsForModernForeignLanguages = 0;
+	private static double qualificationPointsForMathematics = 0;
+
 	public static String[] Programs = { "Naturvetenskapsprogrammet", "Samhällsvetenskapsprogrammet",
 			"Ekonomiprogrammet", "Teknikprogrammet", "Estetiska programmet", "Humanistiska programmet",
 			"Barn- och fritidsprogrammet", "Bygg- och anläggningsprogrammet", "El- och energiprogrammet",
@@ -57,8 +60,9 @@ public class ProgramSave {
 			for (String course : normalSwedishCourses)
 				returnArrayList.add(course);
 		}
-		
-		if(program == "Ekonomiprogrammet" || program == "Naturvetenskapsprogrammet" || program == "Humanistiska programmet" || program == "Samhällsvetenskapsprogrammet") {
+
+		if (program == "Ekonomiprogrammet" || program == "Naturvetenskapsprogrammet"
+				|| program == "Humanistiska programmet" || program == "Samhällsvetenskapsprogrammet") {
 			returnArrayList.add(ProgramSave.getModernForeignLanguages(modernForeignLanguagesChoice, 0));
 		}
 		if (program == "Humanistiska programmet" || program == "Samhällsvetenskapsprogrammet") {
@@ -181,31 +185,60 @@ public class ProgramSave {
 		return specialisationsForProgramArray;
 	}
 
+	public static double getQualificationPointsForCourse(String course) {
+
+		double qualificationPoints = 0.0;
+
+		switch (course) {
+		case "Moderna språk 4":
+			qualificationPoints = 1.0;
+			break;
+		case "Moderna språk 5":
+			if (qualificationPointsForModernForeignLanguages < 1.5)
+				qualificationPoints = 0.5;
+			break;
+		case "Engelska 7":
+			qualificationPoints = 1.0;
+			break;
+		case "Matematik 2":
+			qualificationPoints = 0.5;
+			break;
+		case "Matematik 3":
+			qualificationPoints = 0.5;
+			break;
+		case "Matematik 4":
+			qualificationPoints = 0.5;
+			break;
+		}
+
+		return qualificationPoints;
+	}
+
 	private static String getModernForeignLanguages(String modernForeignLanguagesChoice, int courseNumber) {
 
 		String modernForeignLanguageCourse = new String();
 
-			switch (modernForeignLanguagesChoice) {
-			case "Moderna språk (börjar i kurs 4)":
-				modernForeignLanguageCourse = "Moderna språk " + (courseNumber + 4);
-				break;
-			case "Modersmål":
-				modernForeignLanguageCourse = "Modersmål " + (courseNumber + 1);
-				break;
-			case "Moderna språk (börjar i kurs 1":
-				modernForeignLanguageCourse = "Moderna språk " + (courseNumber + 1);
-				break;
-			case "Kinesiska (börjar i kurs 4)":
-				modernForeignLanguageCourse = "Kinesiska " + (courseNumber + 4);
-				break;
-			case "Kinesiska (börjar i kurs 1)":
-				modernForeignLanguageCourse = "Kinesiska " + (courseNumber + 1);
-				break;
-			case "Svenskt teckenspråk":
-				modernForeignLanguageCourse = "Svenskt teckenspråk " + (courseNumber + 1);
-				break;
-			}
-		
+		switch (modernForeignLanguagesChoice) {
+		case "Moderna språk (börjar i kurs 4)":
+			modernForeignLanguageCourse = "Moderna språk " + (courseNumber + 4);
+			break;
+		case "Modersmål":
+			modernForeignLanguageCourse = "Modersmål " + (courseNumber + 1);
+			break;
+		case "Moderna språk (börjar i kurs 1":
+			modernForeignLanguageCourse = "Moderna språk " + (courseNumber + 1);
+			break;
+		case "Kinesiska (börjar i kurs 4)":
+			modernForeignLanguageCourse = "Kinesiska " + (courseNumber + 4);
+			break;
+		case "Kinesiska (börjar i kurs 1)":
+			modernForeignLanguageCourse = "Kinesiska " + (courseNumber + 1);
+			break;
+		case "Svenskt teckenspråk":
+			modernForeignLanguageCourse = "Svenskt teckenspråk " + (courseNumber + 1);
+			break;
+		}
+
 		return modernForeignLanguageCourse;
 
 	}

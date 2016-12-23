@@ -16,7 +16,7 @@ public class ProgramSave {
 			"Hotell- och turismprogrammet", "Industritekniska programmet", "Naturbruksprogrammet",
 			"Resturang- och livsmedelsprogrammet", "VVS- och fastighetsprogrammet", "Vård- och omsorgsprogrammet" };
 
-	private static String[] coursesNatureCommon = { "Engelska 5", "Engelska 6", "Historia 1c", "Idrott och Hälsa 1",
+	private static String[] coursesNatureCommon = { "Engelska 5", "Engelska 6", "Historia 1", "Idrott och Hälsa 1",
 			"Matematik 1c", "Matematik 2c", "Matematik 3c", "Religionskunskap 1", "Samhällskunskap 1b", "Biologi 1",
 			"Fysik 1a", "Kemi 1" };
 

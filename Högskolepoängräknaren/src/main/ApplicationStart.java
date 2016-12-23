@@ -174,7 +174,7 @@ public class ApplicationStart extends Application {
 		Label gradeInTableLabel = new Label("Betyg");
 		FlowPane.setMargin(gradeInTableLabel, new Insets(0, 0, 0, 200));
 
-		Label pointsFromCourseInTableLabel = new Label("poäng");
+		Label pointsFromCourseInTableLabel = new Label("Poäng");
 		FlowPane.setMargin(pointsFromCourseInTableLabel, new Insets(0, 0, 0, 10));
 
 		Label qualificationPointsInTableLabel = new Label("Meritvärde");

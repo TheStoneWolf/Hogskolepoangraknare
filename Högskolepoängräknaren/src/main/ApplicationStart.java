@@ -174,13 +174,14 @@ public class ApplicationStart extends Application {
 		Label gradeInTableLabel = new Label("Betyg");
 		FlowPane.setMargin(gradeInTableLabel, new Insets(0, 0, 0, 200));
 
-		Label extraPointsInTableLabel = new Label("Meritvärde");
-		FlowPane.setMargin(extraPointsInTableLabel, new Insets(0, 0, 0, 10));
-
 		Label pointsFromCourseInTableLabel = new Label("poäng");
 		FlowPane.setMargin(pointsFromCourseInTableLabel, new Insets(0, 0, 0, 10));
-		courseTableUpperLabelsPane.getChildren().addAll(courseInTableLabel, gradeInTableLabel, extraPointsInTableLabel,
-				pointsFromCourseInTableLabel);
+
+		Label qualificationPointsInTableLabel = new Label("Meritvärde");
+		FlowPane.setMargin(qualificationPointsInTableLabel, new Insets(0, 0, 0, 10));
+
+		courseTableUpperLabelsPane.getChildren().addAll(courseInTableLabel, gradeInTableLabel,
+				pointsFromCourseInTableLabel, qualificationPointsInTableLabel);
 
 		GridPane courseTablePane = new GridPane();
 		ColumnConstraints columnOneForCourseTable = new ColumnConstraints();
@@ -204,8 +205,8 @@ public class ApplicationStart extends Application {
 		stage.setScene(applicationScene);
 		stage.setTitle("Högskolepoängräknaren");
 		stage.show();
-		
-		//Increases scroll speed
+
+		// Increases scroll speed
 		sceneScrollPane.setOnScroll(new EventHandler<ScrollEvent>() {
 			@Override
 			public void handle(ScrollEvent event) {
@@ -305,7 +306,7 @@ public class ApplicationStart extends Application {
 						programCourses[i] = new TextField();
 						programCourses[i].setPrefSize(25.0, 0);
 						GridPane.setMargin(programCourses[i], new Insets(0, 35, 7.5, 25));
-						courseTablePane.add(programCourses[i], 1, i);
+						courseTablePane.add(programCourses[i], 2, i);
 
 						// Adds the parameter for qualification points
 						// (meritvärde)
@@ -320,6 +321,8 @@ public class ApplicationStart extends Application {
 						Text qualificationPointsForCourseText = new Text(qualificationPointsLackingZeroDecimal);
 						qualificationPointsForCourseText.setTranslateY(-5);
 						courseTablePane.add(qualificationPointsForCourseText, 2, i);
+
+						// Adds the points earned from each course
 
 					}
 

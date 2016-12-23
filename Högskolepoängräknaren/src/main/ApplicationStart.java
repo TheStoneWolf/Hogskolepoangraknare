@@ -305,8 +305,15 @@ public class ApplicationStart extends Application {
 						// Users grade for course is added here
 						programCourses[i] = new TextField();
 						programCourses[i].setPrefSize(25.0, 0);
-						GridPane.setMargin(programCourses[i], new Insets(0, 35, 7.5, 25));
-						courseTablePane.add(programCourses[i], 2, i);
+						GridPane.setMargin(programCourses[i], new Insets(0, 0, 7.5, 25));
+						courseTablePane.add(programCourses[i], 1, i);
+						
+						// Adds the points earned from each course
+						int points = ProgramSave.getPointsFromCourse(coursesForProgram[i]);
+						Text pointsText = new Text(String.valueOf(points));
+						GridPane.setMargin(pointsText, new Insets(0, 42, 0, 20));
+						pointsText.setTranslateY(-5);
+						courseTablePane.add(pointsText, 2, i);
 
 						// Adds the parameter for qualification points
 						// (meritvärde)
@@ -320,9 +327,7 @@ public class ApplicationStart extends Application {
 
 						Text qualificationPointsForCourseText = new Text(qualificationPointsLackingZeroDecimal);
 						qualificationPointsForCourseText.setTranslateY(-5);
-						courseTablePane.add(qualificationPointsForCourseText, 2, i);
-
-						// Adds the points earned from each course
+						courseTablePane.add(qualificationPointsForCourseText, 3, i);
 
 					}
 

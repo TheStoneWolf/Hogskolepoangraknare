@@ -29,10 +29,22 @@ public class ProgramSave {
 			"Svenska som Andraspråk 3" };
 
 	private static String[] normalSwedishCourses = { "Svenska 1", "Svenska 2", "Svenska 3" };
+	
+	private static String[] coursesWithOnly50Points = { };
 
 	public static void setProgram(String newProgram) {
 		program = newProgram;
 	}
+	
+	public static int getPointsFromCourse(String course) {
+		int points = 100;
+		
+		for(int i = 0; i < coursesWithOnly50Points.length;i++) {
+			if(course == coursesWithOnly50Points[i]) points = 50;
+		}
+		
+		return points;
+	} 
 
 	public static String[] getCoursesForProgram(boolean hasSwedishAsASecondLanguage, String programSpecialisation,
 			String modernForeignLanguagesChoice) {

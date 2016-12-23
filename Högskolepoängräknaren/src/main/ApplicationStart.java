@@ -17,6 +17,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextField;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -29,6 +30,7 @@ import main.backend.program.ProgramSave;
 public class ApplicationStart extends Application {
 
 	int numberOfListsPressed;
+	int scrollSpeedMultiplier = 50;
 
 	boolean programListHasNotBeenActivated = true;
 	boolean programSpecialisationListHasNotBeenActivated = true;
@@ -202,6 +204,19 @@ public class ApplicationStart extends Application {
 		stage.setScene(applicationScene);
 		stage.setTitle("Högskolepoängräknaren");
 		stage.show();
+		
+		//Increases scroll speed
+		sceneScrollPane.setOnScroll(new EventHandler<ScrollEvent>() {
+			@Override
+			public void handle(ScrollEvent event) {
+				double deltaY = event.getDeltaY() * scrollSpeedMultiplier;
+				double width = sceneScrollPane.getContent().getBoundsInLocal().getWidth();
+				double vvalue = sceneScrollPane.getVvalue();
+				sceneScrollPane.setVvalue(vvalue + -deltaY / width);
+				// deltaY/width to make the scrolling equally fast regardless of
+				// the actual width of the component
+			}
+		});
 
 		// Sets "specialisations" for the program in focus
 		programList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
@@ -254,8 +269,8 @@ public class ApplicationStart extends Application {
 
 			}
 		});
-		
-		//Loads the courses according to the parameters the user has set
+
+		// Loads the courses according to the parameters the user has set
 		confirmProgramChoiceButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			public void handle(ActionEvent arg0) {

@@ -29,22 +29,23 @@ public class ProgramSave {
 			"Svenska som Andraspråk 3" };
 
 	private static String[] normalSwedishCourses = { "Svenska 1", "Svenska 2", "Svenska 3" };
-	
-	private static String[] coursesWithOnly50Points = { };
+
+	private static String[] coursesWithOnly50Points = {};
 
 	public static void setProgram(String newProgram) {
 		program = newProgram;
 	}
-	
+
 	public static int getPointsFromCourse(String course) {
 		int points = 100;
-		
-		for(int i = 0; i < coursesWithOnly50Points.length;i++) {
-			if(course == coursesWithOnly50Points[i]) points = 50;
+
+		for (int i = 0; i < coursesWithOnly50Points.length; i++) {
+			if (course == coursesWithOnly50Points[i])
+				points = 50;
 		}
-		
+
 		return points;
-	} 
+	}
 
 	public static String[] getCoursesForProgram(boolean hasSwedishAsASecondLanguage, String programSpecialisation,
 			String modernForeignLanguagesChoice) {
@@ -204,23 +205,24 @@ public class ProgramSave {
 		switch (course) {
 		case "Moderna språk 4":
 			qualificationPoints = 1.0;
-			break;
+			return qualificationPoints;
 		case "Moderna språk 5":
 			if (qualificationPointsForModernForeignLanguages < 1.5)
 				qualificationPoints = 0.5;
-			break;
+			return qualificationPoints;
 		case "Engelska 7":
 			qualificationPoints = 1.0;
-			break;
-		case "Matematik 2":
-			qualificationPoints = 0.5;
-			break;
-		case "Matematik 3":
-			qualificationPoints = 0.5;
-			break;
-		case "Matematik 4":
-			qualificationPoints = 0.5;
-			break;
+			return qualificationPoints;
+		}
+
+		// Gives qualification points only to mathematics courses 3 and above
+		if (course.length() > 9) {
+			if ((course.substring(0, 9)).equals("Matematik")) {
+				qualificationPoints = 0.5;
+				if (course.charAt(10) == '1' || course.charAt(10) == '2') {
+					qualificationPoints = 0.0;
+				}
+			}
 		}
 
 		return qualificationPoints;

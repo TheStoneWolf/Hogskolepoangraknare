@@ -29,7 +29,7 @@ import main.backend.program.ProgramSave;
 
 public class ApplicationStart extends Application {
 
-	int numberOfListsPressed;
+	int numberOfListsPressed = 0;
 	int scrollSpeedMultiplier = 50;
 
 	boolean programListHasNotBeenActivated = true;
@@ -232,7 +232,7 @@ public class ApplicationStart extends Application {
 
 				programSpecialisationListHasNotBeenActivated = true;
 
-				numberOfListsPressed = numberOfListsPressed > 0 ? numberOfListsPressed-- : 0;
+				numberOfListsPressed = numberOfListsPressed > 0 ? numberOfListsPressed-= 1 : 0;
 
 				if (programListHasNotBeenActivated) {
 					numberOfListsPressed += 1;

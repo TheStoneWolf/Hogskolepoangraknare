@@ -229,10 +229,17 @@ public class ApplicationStart extends Application {
 				ObservableList<String> programFocuses = FXCollections
 						.observableArrayList(ProgramSave.getSpecialisationsForProgram(chosenProgram));
 				programSpecialisationList.setItems(programFocuses);
+				
+				if(!programSpecialisationListHasNotBeenActivated && numberOfListsPressed > 0) {
+					numberOfListsPressed-= 1;
+				} else if(!programSpecialisationListHasNotBeenActivated) {
+					numberOfListsPressed = 0;
+				}
+					
 
 				programSpecialisationListHasNotBeenActivated = true;
 
-				numberOfListsPressed = numberOfListsPressed > 0 ? numberOfListsPressed-= 1 : 0;
+				//numberOfListsPressed = numberOfListsPressed > 0 ? numberOfListsPressed-= 1 : 0;
 
 				if (programListHasNotBeenActivated) {
 					numberOfListsPressed += 1;
